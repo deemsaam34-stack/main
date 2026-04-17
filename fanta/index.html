@@ -665,10 +665,33 @@
   tick(); setInterval(tick, 1000);
 
   // Form
-  document.getElementById('contest-form').addEventListener('submit', e => {
+  document.getElementById('contest-form').addEventListener('submit', async e => {
     e.preventDefault();
-    document.getElementById('success').style.display = 'block';
-    e.target.querySelector('.btn-submit').disabled = true;
+    const btn = e.target.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Отправляем...';
+
+    const inputs = e.target.querySelectorAll('input, select');
+    const [name, email, post_url, flavor] = [...inputs].map(i => i.value);
+
+    try {
+      const res = await fetch('http://187.124.50.71:3000/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, post_url, flavor }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        document.getElementById('success').style.display = 'block';
+        btn.textContent = '✓ Отправлено!';
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Отправить заявку 🚀';
+      alert('Ошибка отправки. Попробуй ещё раз.');
+    }
   });
 </script>
 </body>
