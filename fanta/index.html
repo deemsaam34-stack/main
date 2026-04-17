@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Фанта — Открой лето вкусом!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF6200;
+      --orange-light: #FF8C42;
+      --orange-dark: #CC4E00;
+      --yellow: #FFD700;
+      --white: #FFFDF8;
+      --dark: #1A0A00;
+    }
+
+    body {
+      background: var(--dark);
+      color: var(--white);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(255,98,0,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255,215,0,0.2) 0%, transparent 60%);
+      z-index: 0;
+    }
+
+    .bubbles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(255,200,100,0.6), rgba(255,98,0,0.15));
+      border: 1px solid rgba(255,140,66,0.3);
+      animation: rise linear infinite;
+    }
+
+    @keyframes rise {
+      0%   { transform: translateY(110vh) scale(1);   opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(4rem, 13vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      text-shadow:
+        0 0 40px rgba(255,98,0,0.8),
+        4px 4px 0 var(--orange-dark),
+        8px 8px 0 rgba(0,0,0,0.4);
+      animation: fadeDown 0.8s 0.15s ease both;
+    }
+
+    .hero-title span { color: var(--orange); }
+
+    .hero-sub {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 700;
+      color: rgba(255,253,248,0.85);
+      margin-top: 1.2rem;
+      max-width: 560px;
+      animation: fadeDown 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 1rem 3rem;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(255,98,0,0.6), 0 4px 20px rgba(0,0,0,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+      animation: fadeDown 0.8s 0.45s ease both;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 0 50px rgba(255,98,0,0.9), 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,253,248,0.4);
+      animation: bounce 2s infinite;
+      z-index: 1;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* CONTEST SECTION */
+    .contest {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title span { color: var(--orange); }
+
+    .contest-desc {
+      font-size: 1.1rem;
+      color: rgba(255,253,248,0.7);
+      max-width: 620px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    /* STEPS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .step-card {
+      background: rgba(255,98,0,0.07);
+      border: 1px solid rgba(255,98,0,0.2);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,98,0,0.6);
+    }
+
+    .step-num {
+      font-family: 'Bangers', cursive;
+      font-size: 4rem;
+      line-height: 1;
+      color: rgba(255,98,0,0.18);
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+    }
+
+    .step-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+
+    .step-card h3 {
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 0.4rem;
+      color: var(--orange-light);
+    }
+
+    .step-card p {
+      font-size: 0.9rem;
+      color: rgba(255,253,248,0.6);
+      line-height: 1.6;
+    }
+
+    /* PRIZES */
+    .prizes-section {
+      padding: 6rem 2rem;
+      background: linear-gradient(180deg, transparent, rgba(255,98,0,0.06) 50%, transparent);
+    }
+
+    .prizes-inner { max-width: 1100px; margin: 0 auto; }
+
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .prize-card {
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s;
+    }
+
+    .prize-card:hover { transform: scale(1.04); }
+
+    .prize-card.gold {
+      background: linear-gradient(135deg, #3D2000, #6B3800);
+      border: 2px solid var(--yellow);
+      box-shadow: 0 0 40px rgba(255,215,0,0.2);
+    }
+
+    .prize-card.silver {
+      background: linear-gradient(135deg, #1A0E00, #2E1800);
+      border: 1px solid rgba(255,98,0,0.35);
+    }
+
+    .prize-card.bronze {
+      background: linear-gradient(135deg, #130800, #221000);
+      border: 1px solid rgba(255,98,0,0.2);
+    }
+
+    .prize-emoji { font-size: 3.5rem; display: block; margin-bottom: 0.8rem; }
+
+    .prize-place {
+      font-family: 'Bangers', cursive;
+      font-size: 1rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .prize-card.gold   .prize-place { color: var(--yellow); }
+    .prize-card.silver .prize-place { color: #CCC; }
+    .prize-card.bronze .prize-place { color: var(--orange-light); }
+
+    .prize-name {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+    }
+
+    .prize-desc {
+      font-size: 0.85rem;
+      color: rgba(255,253,248,0.55);
+      line-height: 1.5;
+    }
+
+    .prize-badge {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      background: var(--yellow);
+      color: var(--dark);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 0 24px 0 12px;
+    }
+
+    /* FORM */
+    .form-section {
+      padding: 6rem 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .form-box {
+      background: rgba(255,98,0,0.06);
+      border: 1px solid rgba(255,98,0,0.2);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,98,0,0.25);
+      border-radius: 12px;
+      padding: 0.85rem 1.1rem;
+      color: var(--white);
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255,98,0,0.15);
+    }
+
+    .form-group select option { background: #2a1200; }
+
+    .form-hint {
+      font-size: 0.8rem;
+      color: rgba(255,253,248,0.4);
+      margin-top: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 1.1rem;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255,98,0,0.5);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(255,98,0,0.8);
+    }
+
+    /* SUCCESS */
+    .success-msg {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 1rem 1.5rem;
+      background: rgba(50,255,100,0.08);
+      border: 1px solid rgba(50,255,100,0.3);
+      border-radius: 12px;
+      color: #7effa0;
+      font-weight: 700;
+    }
+
+    /* TIMER */
+    .timer-section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .timer-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.2rem;
+    }
+
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .timer-block {
+      text-align: center;
+    }
+
+    .timer-num {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: var(--white);
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(255,98,0,0.5);
+    }
+
+    .timer-unit {
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,253,248,0.4);
+      margin-top: 0.2rem;
+    }
+
+    .timer-sep {
+      font-family: 'Bangers', cursive;
+      font-size: 3rem;
+      color: var(--orange);
+      opacity: 0.5;
+      align-self: flex-start;
+      padding-top: 0.15rem;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,98,0,0.1);
+      font-size: 0.8rem;
+      color: rgba(255,253,248,0.3);
+    }
+
+    footer strong { color: var(--orange); }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Animated bubbles -->
+<section class="hero">
+  <div class="bubbles" id="bubbles"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Конкурс · Лето 2026</p>
+    <h1 class="hero-title">ФАНТА<br><span>ВЗРЫВАЕТ</span><br>ЛЕТО!</h1>
+    <p class="hero-sub">Сфотографируй свой момент с Фантой — выиграй крутые призы и окати лето вкусом.</p>
+    <a href="#contest" class="btn-primary">Участвовать</a>
+  </div>
+
+  <div class="scroll-hint">↓ скролли ↓</div>
+</section>
+
+<!-- Contest rules -->
+<section class="contest" id="contest">
+  <p class="section-label">Как участвовать</p>
+  <h2 class="section-title">3 шага до <span>победы</span></h2>
+  <p class="contest-desc">
+    Конкурс «Фанта Взрывает Лето» проходит с 1 мая по 31 июля 2026 года.
+    Покажи нам свой самый яркий летний момент — с Фантой в руке, конечно.
+  </p>
+
+  <div class="steps">
+    <div class="step-card">
+      <span class="step-num">01</span>
+      <div class="step-icon">📸</div>
+      <h3>Сделай фото</h3>
+      <p>Сфотографируйся с бутылкой или банкой Фанты в любом летнем месте — на пляже, на даче, в парке.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">02</span>
+      <div class="step-icon">🏷️</div>
+      <h3>Выложи с хэштегом</h3>
+      <p>Опубликуй фото в Instagram или VK с хэштегом <strong style="color:var(--orange-light)">#ФантаВзрываетЛето</strong> и отметь @fanta_ru.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">03</span>
+      <div class="step-icon">📋</div>
+      <h3>Заполни форму</h3>
+      <p>Оставь свои данные ниже — укажи ссылку на пост и жди объявления победителей 5 августа.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">04</span>
+      <div class="step-icon">🎉</div>
+      <h3>Жди победы!</h3>
+      <p>Жюри выберет 10 самых ярких работ. Победители получат призы и станут лицом рекламы Фанты 2027.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Prizes -->
+<section class="prizes-section">
+  <div class="prizes-inner">
+    <p class="section-label">Призовой фонд</p>
+    <h2 class="section-title">Что ты <span>выиграешь</span></h2>
+
+    <div class="prizes-grid">
+      <div class="prize-card gold">
+        <div class="prize-badge">Гран-при</div>
+        <span class="prize-emoji">🏆</span>
+        <div class="prize-place">1 место</div>
+        <div class="prize-name">iPhone 16 Pro + 50 000 ₽</div>
+        <p class="prize-desc">Топовый смартфон + денежный приз. И ты — лицо Фанты в рекламе 2027 года!</p>
+      </div>
+      <div class="prize-card silver">
+        <span class="prize-emoji">🎒</span>
+        <div class="prize-place">2–3 места</div>
+        <div class="prize-name">PlayStation 5 + Мерч</div>
+        <p class="prize-desc">Игровая консоль и эксклюзивный мерч-набор от Фанты — футболки, бутылки, стикеры.</p>
+      </div>
+      <div class="prize-card bronze">
+        <span class="prize-emoji">🎁</span>
+        <div class="prize-place">4–10 места</div>
+        <div class="prize-name">Мерч-набор Фанты</div>
+        <p class="prize-desc">Стильный набор: рюкзак, толстовка, термокружка и запас Фанты на всё лето.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Countdown -->
+<section class="timer-section">
+  <p class="timer-label">До конца приёма заявок</p>
+  <div class="timer">
+    <div class="timer-block">
+      <div class="timer-num" id="t-days">--</div>
+      <div class="timer-unit">дней</div>
+    </div>
+    <div class="timer-sep">:</div>
+    <div class="timer-block">
+      <div class="timer-num" id="t-hours">--</div>
+      <div class="timer-unit">часов</div>
+    </div>
+    <div class="timer-sep">:</div>
+    <div class="timer-block">
+      <div class="timer-num" id="t-mins">--</div>
+      <div class="timer-unit">минут</div>
+    </div>
+    <div class="timer-sep">:</div>
+    <div class="timer-block">
+      <div class="timer-num" id="t-secs">--</div>
+      <div class="timer-unit">секунд</div>
+    </div>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="form-section">
+  <p class="section-label">Участие</p>
+  <h2 class="section-title">Подай <span>заявку</span></h2>
+
+  <div class="form-box">
+    <form id="contest-form">
+      <div class="form-group">
+        <label>Имя</label>
+        <input type="text" placeholder="Как тебя зовут?" required />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com" required />
+      </div>
+      <div class="form-group">
+        <label>Ссылка на пост</label>
+        <input type="url" placeholder="https://instagram.com/p/..." required />
+      </div>
+      <div class="form-group">
+        <label>Любимый вкус Фанты</label>
+        <select>
+          <option>Апельсин — классика</option>
+          <option>Виноград</option>
+          <option>Клубника</option>
+          <option>Лимон</option>
+          <option>Арбуз</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Отправить заявку 🚀</button>
+      <div class="success-msg" id="success">
+        ✅ Заявка принята! Следи за новостями — итоги 5 августа.
+      </div>
+      <p class="form-hint">
+        Нажимая кнопку, вы соглашаетесь с правилами конкурса.<br>
+        Победители будут объявлены 5 августа 2026 года на этой странице.
+      </p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <strong>Фанта</strong> — Открой лето вкусом! · Конкурс проходит с 01.05 по 31.07.2026</p>
+  <p style="margin-top:0.4rem">Не является публичной офертой. 18+</p>
+</footer>
+
+<script>
+  // Bubbles
+  const container = document.getElementById('bubbles');
+  for (let i = 0; i < 22; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 20 + Math.random() * 60;
+    b.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      animation-duration:${6+Math.random()*10}s;
+      animation-delay:${Math.random()*8}s;
+    `;
+    container.appendChild(b);
+  }
+
+  // Countdown to July 31 2026
+  function tick() {
+    const end = new Date('2026-07-31T23:59:59');
+    const now = new Date();
+    const diff = end - now;
+    if (diff <= 0) {
+      document.getElementById('t-days').textContent = '00';
+      document.getElementById('t-hours').textContent = '00';
+      document.getElementById('t-mins').textContent = '00';
+      document.getElementById('t-secs').textContent = '00';
+      return;
+    }
+    const pad = n => String(Math.floor(n)).padStart(2,'0');
+    document.getElementById('t-days').textContent  = pad(diff/864e5);
+    document.getElementById('t-hours').textContent = pad((diff%864e5)/36e5);
+    document.getElementById('t-mins').textContent  = pad((diff%36e5)/6e4);
+    document.getElementById('t-secs').textContent  = pad((diff%6e4)/1e3);
+  }
+  tick(); setInterval(tick, 1000);
+
+  // Form
+  document.getElementById('contest-form').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('success').style.display = 'block';
+    e.target.querySelector('.btn-submit').disabled = true;
+  });
+</script>
+</body>
+</html>
